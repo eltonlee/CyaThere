@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useRoom } from '../hooks/useRoom'
 import { useAvailability } from '../hooks/useAvailability'
 import { useParticipant } from '../context/ParticipantContext'
-import { buildTimeSlots, formatDate } from '../lib/slots'
+import { buildTimeSlots, formatDate, selectAllSlots, clearAllSlots } from '../lib/slots'
 import CalendarPicker from '../components/CalendarPicker'
 import AvailabilityGrid from '../components/AvailabilityGrid'
 import GroupOverview from '../components/GroupOverview'
@@ -65,6 +65,18 @@ export default function Room() {
       }
       return next
     })
+    setIsDirty(true)
+    setSaved(false)
+  }
+
+  function handleSelectAll() {
+    setLocalSlots((ls) => selectAllSlots(ls ?? {}, sortedDates, times))
+    setIsDirty(true)
+    setSaved(false)
+  }
+
+  function handleClearAll() {
+    setLocalSlots((ls) => clearAllSlots(ls ?? {}, sortedDates))
     setIsDirty(true)
     setSaved(false)
   }
@@ -153,7 +165,15 @@ export default function Room() {
             <div style={{ flex: 1, minWidth: 0 }}>
               {/* Interactive date picker */}
               <div style={{ marginBottom: 24 }}>
-                <p style={sectionLabel}>SELECT DATES</p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                  <p style={{ ...sectionLabel, marginBottom: 0 }}>SELECT DATES</p>
+                  {sortedDates.length > 0 && (
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button onClick={handleSelectAll} style={actionBtnStyle}>Select All</button>
+                      <button onClick={handleClearAll} style={actionBtnStyle}>Clear All</button>
+                    </div>
+                  )}
+                </div>
                 <CalendarPicker
                   selectedDates={selectedDates ?? new Set()}
                   onToggle={toggleDate}
@@ -266,9 +286,10 @@ function Legend({ color, border, label }) {
   )
 }
 
-const pageStyle = { maxWidth: 900, margin: '0 auto', padding: '24px 20px 80px' }
+const pageStyle = { maxWidth: 1400, margin: '0 auto', padding: '24px 20px 80px' }
 const topBar = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 28, flexWrap: 'wrap' }
 const centerStyle = { display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh', color: '#6b7280', fontSize: 16 }
 const nameInputStyle = { flex: '1 1 160px', maxWidth: 220, padding: '9px 12px', border: '1px solid #383838', borderRadius: 8, fontSize: 15, background: '#252525', color: '#f9fafb', outline: 'none' }
 const sectionLabel = { fontSize: 11, fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 12 }
 const dateChipBtn = { padding: '4px 10px', background: '#252525', border: '1px solid #383838', borderRadius: 20, color: '#9ca3af', fontSize: 12, cursor: 'pointer' }
+const actionBtnStyle = { padding: '4px 12px', background: 'transparent', color: '#9ca3af', border: '1px solid #383838', borderRadius: 6, fontSize: 12, cursor: 'pointer', fontWeight: 500 }

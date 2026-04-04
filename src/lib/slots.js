@@ -27,6 +27,22 @@ export function hasSlot(slots, date, time) {
   return (slots[date] ?? []).includes(time)
 }
 
+export function selectAllSlots(slots, dates, times) {
+  const next = { ...slots }
+  for (const date of dates) {
+    next[date] = [...times]
+  }
+  return next
+}
+
+export function clearAllSlots(slots, dates) {
+  const next = { ...slots }
+  for (const date of dates) {
+    delete next[date]
+  }
+  return next
+}
+
 export function addSlot(slots, date, time) {
   const existing = slots[date] ?? []
   if (existing.includes(time)) return slots
