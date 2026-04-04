@@ -2,9 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/CyaThere/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CyaThere</title>
+    <script>
+      // Handle SPA redirect from 404.html
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var redirect = params.keys().next().value;
+        if (redirect) {
+          var path = decodeURIComponent(redirect);
+          window.history.replaceState(null, '', '/CyaThere' + path);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

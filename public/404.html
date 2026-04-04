@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CyaThere</title>
+  <script>
+    // Single Page App routing for GitHub Pages
+    // Redirects all paths back to index.html with the original path as a query parameter
+    var path = window.location.pathname;
+    var repo = '/CyaThere';
+    if (path.startsWith(repo)) {
+      var remaining = path.slice(repo.length);
+      window.location.replace(repo + '/?' + encodeURIComponent(remaining + window.location.search + window.location.hash));
+    } else {
+      window.location.replace(repo + '/');
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>
