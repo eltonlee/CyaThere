@@ -9,7 +9,8 @@ function RedirectHandler() {
     const redirect = sessionStorage.getItem('redirect')
     if (redirect) {
       sessionStorage.removeItem('redirect')
-      navigate(redirect, { replace: true })
+      const path = redirect.replace(/^\/CyaThere/, '') || '/'
+      navigate(path, { replace: true })
     }
   }
   return null
