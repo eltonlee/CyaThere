@@ -30,6 +30,11 @@ export default function Room() {
     [room]
   )
 
+  // Reset initialization when name changes so slots re-populate
+  useEffect(() => {
+    initialized.current = false
+  }, [name])
+
   // Seed local state from existing slots exactly once after the initial load
   useEffect(() => {
     if (!availLoading && !initialized.current) {

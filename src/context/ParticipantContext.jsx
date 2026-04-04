@@ -3,14 +3,14 @@ import { createContext, useContext, useState } from 'react'
 const ParticipantContext = createContext(null)
 
 export function ParticipantProvider({ children }) {
-  const [name, setNameState] = useState(() => sessionStorage.getItem('cyathere_name') ?? '')
+  const [name, setNameState] = useState(() => localStorage.getItem('cyathere_name') ?? '')
 
   function setName(value) {
     setNameState(value)
     if (value) {
-      sessionStorage.setItem('cyathere_name', value)
+      localStorage.setItem('cyathere_name', value)
     } else {
-      sessionStorage.removeItem('cyathere_name')
+      localStorage.removeItem('cyathere_name')
     }
   }
 
