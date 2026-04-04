@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
 export default function ShareLink({ roomId }) {
-  const url = `${window.location.origin}${window.location.pathname}#/room/${roomId}`
+  const baseUrl = import.meta.env.BASE_URL || '/CyaThere/'
+  const url = `${window.location.origin}${baseUrl}#/room/${roomId}`
   const [copied, setCopied] = useState(false)
 
   async function copy() {
