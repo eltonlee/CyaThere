@@ -6,7 +6,7 @@ import Room from './pages/Room'
 export default function App() {
   return (
     <ParticipantProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/CyaThere">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/room/:roomId" element={<Room />} />
