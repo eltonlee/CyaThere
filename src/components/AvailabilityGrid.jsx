@@ -1,10 +1,7 @@
 import { useState, useRef, useCallback } from 'react'
 import GridCell from './GridCell'
 import { hasSlot, addSlot, removeSlot, countPerSlot, formatDate, formatTime } from '../lib/slots'
-
-const COL_WIDTH = 90
-const ROW_LABEL_WIDTH = 75
-const CELL_HEIGHT = 20
+import { useIsMobile } from '../hooks/useIsMobile'
 
 export default function AvailabilityGrid({
   dates,
@@ -14,6 +11,11 @@ export default function AvailabilityGrid({
   onSlotsChange,
   editMode = true,
 }) {
+  const isMobile = useIsMobile()
+  const COL_WIDTH = isMobile ? 64 : 90
+  const ROW_LABEL_WIDTH = isMobile ? 52 : 75
+  const CELL_HEIGHT = isMobile ? 36 : 20
+
   const [pendingSlots, setPendingSlots] = useState(null)
   const dragMode = useRef(null)
   const painted = useRef(new Set())
@@ -118,7 +120,7 @@ export default function AvailabilityGrid({
         <div style={{ display: 'flex', marginBottom: 4 }}>
           <div style={{ width: ROW_LABEL_WIDTH, flexShrink: 0 }} />
           {dates.map((date) => (
-            <div key={date} style={{ width: COL_WIDTH, flexShrink: 0, textAlign: 'center', fontSize: 12, fontWeight: 600, color: '#999' }}>
+            <div key={date} style={{ width: COL_WIDTH, flexShrink: 0, textAlign: 'center', fontSize: isMobile ? 10 : 12, fontWeight: 600, color: '#999' }}>
               {formatDate(date)}
             </div>
           ))}

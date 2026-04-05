@@ -37,7 +37,7 @@ export default function CalendarPicker({ selectedDates, onToggle, readOnly = fal
   }
 
   return (
-    <div style={{ maxWidth: 320 }}>
+    <div style={{ maxWidth: 340, width: '100%' }}>
       {/* Month nav */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <button onClick={prev} style={navBtn}>‹</button>
@@ -65,7 +65,7 @@ export default function CalendarPicker({ selectedDates, onToggle, readOnly = fal
               onClick={() => !isPast && !readOnly && onToggle(iso)}
               disabled={isPast}
               style={{
-                padding: '8px 0',
+                padding: '10px 0',
                 border: selected ? '2px solid #10b981' : '2px solid transparent',
                 borderRadius: 6,
                 cursor: (isPast || readOnly) ? 'default' : 'pointer',
@@ -88,7 +88,7 @@ const navBtn = {
   background: 'none',
   border: '1px solid #383838',
   borderRadius: 4,
-  padding: '3px 10px',
+  padding: '6px 14px',
   cursor: 'pointer',
   fontSize: 18,
   color: '#9ca3af',

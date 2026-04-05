@@ -8,6 +8,7 @@ import CalendarPicker from '../components/CalendarPicker'
 import AvailabilityGrid from '../components/AvailabilityGrid'
 import GroupOverview from '../components/GroupOverview'
 import ShareLink from '../components/ShareLink'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 export default function Room() {
   const { roomId } = useParams()
@@ -21,6 +22,7 @@ export default function Room() {
   const [selectedDates, setSelectedDates] = useState(null) // null = not yet initialized
   const [isDirty, setIsDirty] = useState(false)
   const initialized = useRef(false)
+  const isMobile = useIsMobile()
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [saveError, setSaveError] = useState(null)
@@ -160,9 +162,9 @@ export default function Room() {
             </p>
           )}
 
-          {/* Main layout: calendar + grid on left, share link on right */}
-          <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start' }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
+          {/* Main layout: calendar + grid on left, share link on right (stacked on mobile) */}
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 24 : 32, alignItems: 'flex-start' }}>
+            <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
               {/* Interactive date picker */}
               <div style={{ marginBottom: 24 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
@@ -226,7 +228,7 @@ export default function Room() {
             </div>
 
             {/* Share link sidebar */}
-            <div style={{ flexShrink: 0, width: 220 }}>
+            <div style={{ flexShrink: 0, width: isMobile ? '100%' : 220 }}>
               <ShareLink roomId={roomId} />
             </div>
           </div>
