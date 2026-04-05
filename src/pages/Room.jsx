@@ -156,6 +156,24 @@ export default function Room() {
             </button>
           </div>
 
+          {/* Returning user quick-select — only shown when name field is empty */}
+          {!nameInput.trim() && allAvailability.length > 0 && (
+            <div style={{ marginBottom: 20 }}>
+              <p style={{ ...sectionLabel, marginBottom: 6 }}>returning? pick your name</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {allAvailability.map((row) => (
+                  <button
+                    key={row.participant}
+                    onClick={() => { setNameInput(row.participant); setName(row.participant) }}
+                    style={dateChipBtn}
+                  >
+                    {row.participant}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {saveError && (
             <p style={{ color: '#f87171', fontSize: 13, marginBottom: 16 }}>
               Save failed: {saveError}
