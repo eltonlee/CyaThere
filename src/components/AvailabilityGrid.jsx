@@ -13,7 +13,7 @@ export default function AvailabilityGrid({
 }) {
   const isMobile = useIsMobile()
   const COL_WIDTH = isMobile ? 64 : 90
-  const ROW_LABEL_WIDTH = isMobile ? 52 : 75
+  const ROW_LABEL_WIDTH = isMobile ? 68 : 75
   const CELL_HEIGHT = isMobile ? 36 : 20
 
   const [pendingSlots, setPendingSlots] = useState(null)
@@ -107,7 +107,7 @@ export default function AvailabilityGrid({
         style={{
           display: 'inline-block',
           minWidth: ROW_LABEL_WIDTH + dates.length * COL_WIDTH,
-          touchAction: editMode ? 'none' : 'auto',
+          touchAction: editMode ? (isMobile ? 'pan-x' : 'none') : 'auto',
           userSelect: 'none',
           WebkitUserSelect: 'none',
         }}
@@ -136,12 +136,14 @@ export default function AvailabilityGrid({
                 flexShrink: 0,
                 textAlign: 'right',
                 paddingRight: 8,
-                fontSize: 11,
+                fontSize: isMobile ? 10 : 11,
                 color: '#666',
                 height: CELL_HEIGHT,
                 lineHeight: `${CELL_HEIGHT}px`,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
               }}>
-                {isHour ? formatTime(time) : ''}
+                {isMobile ? formatTime(time) : (isHour ? formatTime(time) : '')}
               </div>
               {dates.map((date) => (
                 <div key={date} style={{ width: COL_WIDTH, flexShrink: 0 }}>
